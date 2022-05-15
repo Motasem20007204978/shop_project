@@ -6,6 +6,7 @@ final List<String> list1Samsung = [
   "https://z.nooncdn.com/products/tr:n-t_240/v1647270585/N52889708A_1.jpg",
   "https://z.nooncdn.com/products/tr:n-t_240/v1628160647/N49682393A_1.jpg",
 ];
+
 final List<String> list2Sumsung = [
   "https://z.nooncdn.com/products/tr:n-t_240/v1647270585/N52889706A_1.jpg",
   "https://z.nooncdn.com/products/tr:n-t_240/v1647270585/N52889707A_1.jpg",
@@ -49,7 +50,6 @@ class SamsungProducts extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      //ClipRRect for image border radius
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: Image.network(
@@ -84,7 +84,6 @@ class SamsungProducts extends StatelessWidget {
                   aspectRatio: 5.0,
                 ),
                 itemBuilder: (context, i, id) {
-                  //for onTap to redirect to another screen
                   return GestureDetector(
                     child: Container(
                       decoration: BoxDecoration(
