@@ -96,9 +96,8 @@ class _SignUpLoginState extends State<SignUpLogin> {
       validator: (val) {
         if (val!.isEmpty || !RegExp(r"^[a-zA-Z]+").hasMatch(val)) {
           return 'Invalid username';
-        } 
-        if (_authMode == AuthMode.Login &&
-            val != _authData['username']) {
+        }
+        if (_authMode == AuthMode.Login && val != _authData['username']) {
           return 'username not equaled or not registered';
         }
         return null;
@@ -120,7 +119,7 @@ class _SignUpLoginState extends State<SignUpLogin> {
         if (val!.isEmpty ||
             !RegExp(r"^[a-zA-Z0-9_\-.]+@[a-z]+\.[a-z]").hasMatch(val)) {
           return 'Invalid email';
-        } 
+        }
         if (_authMode == AuthMode.Login && val != _authData['email']) {
           return 'email not equaled or not registered';
         }
@@ -143,9 +142,8 @@ class _SignUpLoginState extends State<SignUpLogin> {
       validator: (val) {
         if (val!.isEmpty || val.length <= 6) {
           return 'Invalid password';
-        } 
-        if (_authMode == AuthMode.Login &&
-            val != _authData['password']) {
+        }
+        if (_authMode == AuthMode.Login && val != _authData['password']) {
           return 'passwored not equaled or not registered';
         }
         return null;
@@ -205,7 +203,7 @@ class _SignUpLoginState extends State<SignUpLogin> {
     );
   }
 
-  void _submit() {
+  void _submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
