@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'categories_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpLogin extends StatefulWidget {
   const SignUpLogin({Key? key}) : super(key: key);
@@ -97,9 +99,6 @@ class _SignUpLoginState extends State<SignUpLogin> {
         if (val!.isEmpty || !RegExp(r"^[a-zA-Z]+").hasMatch(val)) {
           return 'Invalid username';
         }
-        if (_authMode == AuthMode.Login && val != _authData['username']) {
-          return 'username not equaled or not registered';
-        }
         return null;
       },
       onSaved: (val) {
@@ -107,6 +106,9 @@ class _SignUpLoginState extends State<SignUpLogin> {
       },
     );
   }
+
+  String? errorForEmail;
+  String? errorForPass;
 
   TextFormField _email(BuildContext context) {
     return TextFormField(
@@ -120,10 +122,7 @@ class _SignUpLoginState extends State<SignUpLogin> {
             !RegExp(r"^[a-zA-Z0-9_\-.]+@[a-z]+\.[a-z]").hasMatch(val)) {
           return 'Invalid email';
         }
-        if (_authMode == AuthMode.Login && val != _authData['email']) {
-          return 'email not equaled or not registered';
-        }
-        return null;
+        return errorForEmail;
       },
       onSaved: (val) {
         _authData['email'] = val!;
@@ -143,10 +142,7 @@ class _SignUpLoginState extends State<SignUpLogin> {
         if (val!.isEmpty || val.length <= 6) {
           return 'Invalid password';
         }
-        if (_authMode == AuthMode.Login && val != _authData['password']) {
-          return 'passwored not equaled or not registered';
-        }
-        return null;
+        return errorForPass;
       },
       onSaved: (val) {
         _authData['password'] = val!;
@@ -204,20 +200,66 @@ class _SignUpLoginState extends State<SignUpLogin> {
   }
 
   void _submit() async {
+
+    errorForEmail = null;
+    errorForPass = null;
+
     if (!_formKey.currentState!.validate()) {
+      print('error in checking data');
       return;
     }
     _formKey.currentState?.save();
 
     if (_authMode == AuthMode.Login) {
       // log in
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Category()));
+      print('login');
+      try {
+        final credential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _authData['email']!,
+          password: _authData['password']!,
+        );
+        print('login data is right');
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const Category()));
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          errorForEmail = 'No user found for that email.';
+        } else if (e.code == 'wrong-password') {
+          errorForPass = 'Wrong password provided for that user.';
+        } else {
+          errorForEmail = e.message;
+        }
+      }
     } else {
       // sign up
-      setState(() {
-        _authMode = AuthMode.Login;
-      });
+      try {
+        print('hi');
+        final credential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _authData['email']!,
+          password: _authData['password']!,
+        );
+        print('registration done');
+        setState(() {
+          _authMode = AuthMode.Login;
+        });
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          errorForPass = 'The password provided is too weak.';
+        } else if (e.code == 'email-already-in-use') {
+          errorForEmail = 'The account already exists for that email.';
+        } else {
+          errorForEmail = e.message;
+        }
+      } catch (e) {
+        print('hello');
+        print(e);
+      }
+    }
+    if (!_formKey.currentState!.validate()) {
+      print('error when checking from database');
+      return;
     }
   }
 }
