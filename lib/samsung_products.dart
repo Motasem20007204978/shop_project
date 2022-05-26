@@ -9,7 +9,7 @@ final List<String> list1Samsung = [
 
 final List<String> list2Sumsung = [
   "https://fscl01.fonpit.de/devices/02/1502.jpg",
-  "https://img.joomcdn.net/98a9974dc12ad34f8231bdc8a8e0048187d0a823_1024_1024.jpeg",
+  "https://4.bp.blogspot.com/-yvYVOvB-ZQg/XHjYxlk9VaI/AAAAAAAAR2Q/Aj-ds7rX-iYTs2JYWDwaQlQD7jojy4qtACLcBGAs/s1600/Samsung-Galaxy-A30-SM-A305.jpg",
   "https://www.wesolveall.com/wp-content/uploads/2020/09/samsung-phone-model-galaxy-note-9-display-1024x576.jpg",
 ];
 
@@ -141,20 +141,4 @@ class SamsungProducts extends StatelessWidget {
       ),
     );
   }
-
-  // SnackBar _details(BuildContext context) {
-  //   return SnackBar(
-  //     content: Container(
-  //       height: 150,
-  //       child: const Text(
-  //         'Slider 1 : Samsung models 1 The Samsung brand the Samsung brand meaning Samsung has this flower-shaped logo that symbolizes the Hua word that means petals or lavish in Chinese. The second syllable that we can find in their name means achievement or action ',
-  //         style: TextStyle(
-  //           // letterSpacing: 20.0,
-  //           wordSpacing: 5,
-  //         ),
-  //       ),
-  //     ),
-  //     duration: const Duration(seconds: 2),
-  //   );
-  // }
 }
