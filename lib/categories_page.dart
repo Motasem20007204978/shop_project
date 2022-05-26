@@ -32,7 +32,7 @@ class Category extends StatelessWidget {
       ],
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200,
-        childAspectRatio: 2,
+        childAspectRatio: 1,
         crossAxisSpacing: 50,
         mainAxisSpacing: 50,
       ),

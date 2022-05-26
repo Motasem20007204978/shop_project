@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'categories_page.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpLogin extends StatefulWidget {
